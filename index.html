@@ -2,45 +2,484 @@
 <html lang="lv">
 <head>
     <meta charset="UTF-8">
-    <title>Labu nakti!</title>
+    <title>Trivia Spēle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            margin-top: 60px;
-            background: #1d1b2e;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+        
+        .game-container {
+            display: none;
+        }
+        
+        .question-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .option.selected {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+        }
+        
+        .option.correct {
+            background: rgba(76, 175, 80, 0.5);
+            border-color: #4CAF50;
+        }
+        
+        .option.incorrect {
+            background: rgba(244, 67, 54, 0.5);
+            border-color: #f44336;
+        }
+        
+        .option.correct-answer {
+            background: rgba(255, 193, 7, 0.5);
+            border-color: #ffc107;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .score {
+            font-size: 1.3em;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .progress {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .result {
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .result.good {
+            color: #4CAF50;
+        }
+        
+        .result.average {
+            color: #FF9800;
+        }
+        
+        .result.poor {
+            color: #f44336;
+        }
+        
+        .results-detail {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .results-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .results-section h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
             color: #fff;
         }
-        img {
-            margin: 30px 0;
-            max-width: 90vw;
-            width: 350px;
-            border-radius: 12px;
-            box-sizing: border-box;
+        
+        .answer-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
         }
-        .subtitle {
-            font-size: 1.3em;
-            color: #979797;
+        
+        .answer-item.incorrect {
+            border-left-color: #f44336;
         }
+        
+        .answer-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .answer-details {
+            font-size: 0.9em;
+            color: #e0e0e0;
+        }
+        
+        .answer-correct {
+            color: #84dd87;
+            font-weight: 600;
+        }
+        
+        .answer-user {
+            color: #f44336;
+        }
+        
         @media (max-width: 600px) {
-            body {
-                margin-top: 30px;
-                padding: 0 10px;
+            .container {
+                padding: 20px;
+                margin: 10px;
             }
+            
             h1 {
-                font-size: 1.3em;
+                font-size: 2em;
             }
-            .subtitle {
+            
+            .question {
+                font-size: 1.2em;
+            }
+            
+            .option {
+                padding: 12px 15px;
                 font-size: 1em;
             }
         }
+        
     </style>
 </head>
 <body>
-    <h1>Arlabunakti!⭐</h1>
-    <img src="sleeping cat.jpg" alt="Guļošs kaķis">
-    <div class="subtitle">Saldus sapnīšus!🐱💕</div>
-    <img src="https://media1.tenor.com/m/cIMCczKDW8oAAAAd/kiss-cute.gif" alt="">
+    <div class="container">
+        <h1>🧠 Kristas pašatklāšanas spēle</h1>
+        <div class="subtitle">(Šī spēle aizņēma ilgāk nekā domāju xd)</div>
+        
+        <div id="start-screen">
+            <img src="cat-study.jpg" alt="Guļošs kaķis" style="max-width: 300px; border-radius: 15px; margin: 20px 0;">
+            <div style="margin: 20px 0;">
+                <button class="btn" onclick="startGame()">Sākt spēli</button>
+            </div>
+        </div>
+        
+        <div id="game-screen" class="game-container">
+            <div class="score">
+                Punkti: <span id="score">0</span> / <span id="total-questions">0</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="question-container">
+                <div class="question" id="question-text"></div>
+                <div class="options" id="options-container"></div>
+            </div>
+            <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Nākamais jautājums</button>
+        </div>
+        
+        <div id="result-screen" class="game-container">
+            <div class="result" id="result-text"></div>
+            <div class="score">Tavs rezultāts: <span id="final-score">0</span> / <span id="final-total">0</span></div>
+            
+            <div class="results-detail">
+                <div class="results-section">
+                    <h3>✅ Ko tu zini:</h3>
+                    <div id="correct-answers-list"></div>
+                </div>
+                
+                <div class="results-section">
+                    <h3>📚 Ko iemācījies:</h3>
+                    <div id="incorrect-answers-list"></div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="restartGame()">Spēlēt vēlreiz</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="questions.js"></script>
+    <script>
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let gameStarted = false;
+        let correctAnswers = [];
+        let incorrectAnswers = [];
+        let questionAnswered = false;
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            document.getElementById('result-screen').style.display = 'none';
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            correctAnswers = [];
+            incorrectAnswers = [];
+            questionAnswered = false;
+            gameStarted = true;
+            
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('final-total').textContent = questions.length;
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('next-btn').disabled = true;
+            document.getElementById('next-btn').textContent = 'Nākamais jautājums';
+            document.getElementById('next-btn').onclick = nextQuestion;
+            selectedAnswer = null;
+            questionAnswered = false;
+            updateProgress();
+        }
+
+        function selectAnswer(answerIndex) {
+            selectedAnswer = answerIndex;
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === answerIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (selectedAnswer === null || questionAnswered) return;
+            
+            questionAnswered = true;
+            const question = questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            // Saglabājam rezultātu
+            const questionResult = {
+                question: question.question,
+                userAnswer: question.options[selectedAnswer],
+                correctAnswer: question.options[question.correct],
+                isCorrect: selectedAnswer === question.correct
+            };
+            
+            if (selectedAnswer === question.correct) {
+                correctAnswers.push(questionResult);
+            } else {
+                incorrectAnswers.push(questionResult);
+            }
+            
+            // Parādām pareizās atbildes ar pareizām krāsām
+            options.forEach((option, index) => {
+                option.onclick = null;
+                if (index === question.correct) {
+                    // Ja lietotājs izvēlējās pareizo atbildi, tā ir zaļa
+                    if (index === selectedAnswer) {
+                        option.classList.add('correct');
+                    } else {
+                        // Ja lietotājs neizvēlējās pareizo, tā ir dzeltena
+                        option.classList.add('correct-answer');
+                    }
+                } else if (index === selectedAnswer && index !== question.correct) {
+                    // Lietotāja izvēlētā nepareizā atbilde ir sarkana
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Palielinām punktu skaitu un parādām confetti
+            if (selectedAnswer === question.correct) {
+                score++;
+                // Confetti efekts pareizajai atbildei
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+            
+            document.getElementById('score').textContent = score;
+            
+            if (currentQuestionIndex < questions.length - 1) {
+                setTimeout(() => {
+                    document.getElementById('next-btn').textContent = 'Nākamais jautājums';
+                    document.getElementById('next-btn').onclick = () => {
+                        currentQuestionIndex++;
+                        showQuestion();
+                    };
+                }, 2000); // Īsa pauze, lai lietotājs redz rezultātu
+            } else {
+                setTimeout(() => {
+                    document.getElementById('next-btn').textContent = 'Skatīt rezultātu';
+                    document.getElementById('next-btn').onclick = showResult;
+                }, 2000);
+            }
+        }
+
+        function showResult() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            
+            const percentage = (score / questions.length) * 100;
+            document.getElementById('final-score').textContent = score;
+            
+            const resultText = document.getElementById('result-text');
+            if (percentage >= 80) {
+                resultText.textContent = 'Lieliski! 🎉';
+                resultText.className = 'result good';
+            } else if (percentage >= 60) {
+                resultText.textContent = 'Labi! 👍';
+                resultText.className = 'result average';
+            } else {
+                resultText.textContent = 'Mēģini vēlreiz! 💪';
+                resultText.className = 'result poor';
+            }
+            
+            // Parādām pareizās atbildes
+            const correctList = document.getElementById('correct-answers-list');
+            correctList.innerHTML = '';
+            if (correctAnswers.length > 0) {
+                correctAnswers.forEach(answer => {
+                    const item = document.createElement('div');
+                    item.className = 'answer-item';
+                    item.innerHTML = `
+                        <div class="answer-question">${answer.question}</div>
+                        <div class="answer-details">
+                            <span class="answer-correct">✅ Pareizā atbilde: ${answer.correctAnswer}</span>
+                        </div>
+                    `;
+                    correctList.appendChild(item);
+                });
+            } else {
+                correctList.innerHTML = '<div style="color: #999; font-style: italic;">Nav pareizu atbilžu</div>';
+            }
+            
+            // Parādām nepareizās atbildes
+            const incorrectList = document.getElementById('incorrect-answers-list');
+            incorrectList.innerHTML = '';
+            if (incorrectAnswers.length > 0) {
+                incorrectAnswers.forEach(answer => {
+                    const item = document.createElement('div');
+                    item.className = 'answer-item incorrect';
+                    item.innerHTML = `
+                        <div class="answer-question">${answer.question}</div>
+                        <div class="answer-details">
+                            <div class="answer-user">❌ Tava atbilde: ${answer.userAnswer}</div>
+                            <div class="answer-correct">✅ Pareizā atbilde: ${answer.correctAnswer}</div>
+                        </div>
+                    `;
+                    incorrectList.appendChild(item);
+                });
+            } else {
+                incorrectList.innerHTML = '<div style="color: #999; font-style: italic;">Visas atbildes bija pareizas! 🎉</div>';
+            }
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+    </script>
 </body>
 </html>
