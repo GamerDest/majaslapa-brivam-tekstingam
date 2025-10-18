@@ -87,14 +87,29 @@
             border-color: #4CAF50;
         }
         
+        .group-option.correct {
+            background: rgba(76, 175, 80, 0.5) !important;
+            border-color: #4CAF50 !important;
+        }
+        
         .option.incorrect {
-            background: rgba(244, 67, 54, 0.5);
-            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.5) !important;
+            border-color: #f44336 !important;
+        }
+        
+        .group-option.incorrect {
+            background: rgba(244, 67, 54, 0.5) !important;
+            border-color: #f44336 !important;
         }
         
         .option.correct-answer {
             background: rgba(255, 193, 7, 0.5);
             border-color: #ffc107;
+        }
+        
+        .group-option.correct-answer {
+            background: rgba(255, 193, 7, 0.5) !important;
+            border-color: #ffc107 !important;
         }
         
         .btn {
@@ -141,6 +156,13 @@
             height: 100%;
             transition: width 0.3s ease;
             width: 0%;
+        }
+        
+        .question-counter {
+            font-size: 1.1em;
+            color: #e0e0e0;
+            margin: 10px 0 20px 0;
+            font-weight: 500;
         }
         
         .result {
@@ -212,6 +234,223 @@
             color: #f44336;
         }
         
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .collection-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .collection-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .collection-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+            color: #fff;
+        }
+        
+        .collection-card p {
+            margin: 5px 0;
+            color: #e0e0e0;
+            font-size: 0.9em;
+        }
+        
+        .collection-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .main-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .mode-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .mode-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: #4CAF50;
+        }
+        
+        .mode-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .mode-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+            color: #fff;
+        }
+        
+        .mode-card p {
+            margin: 0;
+            color: #e0e0e0;
+            font-size: 0.9em;
+        }
+        
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px 0;
+        }
+        
+        .separator-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+        
+        .separator-text {
+            margin: 0 20px;
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .flashcards-mode {
+            margin-top: 30px;
+        }
+        
+        .flashcards-card {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .group-option {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .group-option.selected {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+        }
+        
+        .flashcard {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .flashcard-question {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .flashcard-answer {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .flashcard-answer-text {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #84dd87;
+            line-height: 1.5;
+        }
+        
+        .flashcard-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .flashcard-nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flashcard-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #4CAF50;
+            transform: scale(1.1);
+        }
+        
+        .flashcard-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .flashcard-counter {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+        
+        .exit-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .exit-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #4CAF50;
+            transform: scale(1.05);
+        }
+        
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -242,16 +481,65 @@
         <div id="start-screen">
             <img src="cat-study.jpg" alt="Guļošs kaķis" style="max-width: 300px; border-radius: 15px; margin: 20px 0;">
             <div style="margin: 20px 0;">
-                <button class="btn" onclick="startGame()">Sākt spēli</button>
+                <button class="btn" onclick="showCollections()">Izvēlēties kolekciju</button>
             </div>
         </div>
         
+        <div id="collection-screen" class="game-container">
+            <h2>Izvēlies spēles režīmu</h2>
+            
+            <!-- Galvenie režīmi -->
+            <div class="main-modes">
+                <div class="mode-card" onclick="selectMode('group')">
+                    <div class="mode-icon">🔗</div>
+                    <h3>Sagrupē</h3>
+                    <p>Izvēlies pareizos elementus procesam</p>
+                </div>
+                
+                <div class="mode-card" onclick="selectMode('systems')">
+                    <div class="mode-icon">⚙️</div>
+                    <h3>Sistēmas</h3>
+                    <p>Vienkāršs trivia par orgānu sistēmām</p>
+                </div>
+                
+                <div class="mode-card" onclick="selectMode('blitz')">
+                    <div class="mode-icon">⚡</div>
+                    <h3>Blitz</h3>
+                    <p>5 minūšu ātrā spēle</p>
+                </div>
+            </div>
+            
+            <div class="separator">
+                <div class="separator-line"></div>
+                <span class="separator-text">Kolekcijas</span>
+                <div class="separator-line"></div>
+            </div>
+            
+            <!-- Kolekcijas -->
+            <div class="collections-grid" id="collections-container"></div>
+            
+            <!-- Flashcards režīms -->
+            <div class="flashcards-mode">
+                <div class="mode-card flashcards-card" onclick="selectMode('flashcards')">
+                    <div class="mode-icon">📚</div>
+                    <h3>Flashcards</h3>
+                    <p>Mācību kārtiņas</p>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showStartScreen()">Atpakaļ</button>
+        </div>
+        
         <div id="game-screen" class="game-container">
-            <div class="score">
+            <button class="exit-button" onclick="exitToCollections()" title="Iziet">‹</button>
+            <div class="score" id="score-container">
                 Punkti: <span id="score">0</span> / <span id="total-questions">0</span>
             </div>
-            <div class="progress">
+            <div class="progress" id="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="question-counter" id="question-counter">
+                Jautājums <span id="current-question">1</span> no <span id="total-questions-display">0</span>
             </div>
             <div class="question-container">
                 <div class="question" id="question-text"></div>
@@ -290,9 +578,119 @@
         let correctAnswers = [];
         let incorrectAnswers = [];
         let questionAnswered = false;
+        let currentCollection = 0;
+        let currentQuestions = [];
+        let collections = [];
+        let currentMode = '';
+        let blitzTimer = null;
+        let blitzTimeLeft = 300; // 5 minūtes sekundēs
+
+        // Inicializējam kolekcijas
+        function initializeCollections() {
+            const allQuestions = [...questions]; // Only use regular questions, not groupQuestions
+            const questionsPerCollection = 20;
+            collections = [];
+            
+            for (let i = 0; i < allQuestions.length; i += questionsPerCollection) {
+                const collectionNumber = Math.floor(i / questionsPerCollection) + 1;
+                const startIndex = i + 1;
+                const endIndex = Math.min(i + questionsPerCollection, allQuestions.length);
+                
+                collections.push({
+                    number: collectionNumber,
+                    startIndex: startIndex,
+                    endIndex: endIndex,
+                    questions: allQuestions.slice(i, i + questionsPerCollection),
+                    questionCount: endIndex - startIndex + 1
+                });
+            }
+        }
+
+        function selectMode(mode) {
+            currentMode = mode;
+            
+            if (mode === 'group') {
+                startGroupMode();
+            } else if (mode === 'systems') {
+                startSystemsMode();
+            } else if (mode === 'flashcards') {
+                startFlashcardsMode();
+            } else if (mode === 'blitz') {
+                startBlitzMode();
+            }
+        }
+
+        function showCollections() {
+            initializeCollections();
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('collection-screen').style.display = 'block';
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
+            
+            const container = document.getElementById('collections-container');
+            container.innerHTML = '';
+            
+            collections.forEach(collection => {
+                const card = document.createElement('div');
+                card.className = 'collection-card';
+                card.onclick = () => selectCollection(collection.number - 1);
+                card.innerHTML = `
+                    <div class="collection-number">${collection.number}</div>
+                    <h3>Kolekcija ${collection.number}</h3>
+                    <p>Jautājumi ${collection.startIndex}-${collection.endIndex}</p>
+                    <p>(${collection.questionCount} jautājumi)</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showStartScreen() {
+            document.getElementById('start-screen').style.display = 'block';
+            document.getElementById('collection-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
+        }
+
+        function selectCollection(collectionIndex) {
+            currentCollection = collectionIndex;
+            currentQuestions = collections[collectionIndex].questions;
+            currentMode = 'collection';
+            startGame();
+        }
+
+        // Sagrupē režīms
+        function startGroupMode() {
+            currentQuestions = groupQuestions;
+            currentMode = 'group';
+            startGame();
+        }
+
+        // Sistēmas režīms
+        function startSystemsMode() {
+            currentQuestions = reversedQuestions;
+            currentMode = 'systems';
+            startGame();
+        }
+
+        // Flashcards režīms
+        function startFlashcardsMode() {
+            currentQuestions = questions;
+            currentMode = 'flashcards';
+            startGame();
+        }
+
+        // Blitz režīms
+        function startBlitzMode() {
+            // Samiksējam tikai parastos jautājumus (ne groupQuestions)
+            currentQuestions = [...questions].sort(() => Math.random() - 0.5);
+            currentMode = 'blitz';
+            blitzTimeLeft = 300;
+            startGame();
+        }
 
         function startGame() {
             document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('collection-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'block';
             document.getElementById('result-screen').style.display = 'none';
             
@@ -303,32 +701,86 @@
             questionAnswered = false;
             gameStarted = true;
             
-            document.getElementById('total-questions').textContent = questions.length;
-            document.getElementById('final-total').textContent = questions.length;
+            const totalQuestions = currentQuestions.length;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('final-total').textContent = totalQuestions;
+            document.getElementById('total-questions-display').textContent = totalQuestions;
+            
+            // Hide score and progress for flashcards mode
+            if (currentMode === 'flashcards') {
+                document.getElementById('score-container').style.display = 'none';
+                document.getElementById('progress-container').style.display = 'none';
+                document.getElementById('question-counter').style.display = 'none';
+            } else {
+                document.getElementById('score-container').style.display = 'block';
+                document.getElementById('progress-container').style.display = 'block';
+                document.getElementById('question-counter').style.display = 'block';
+            }
+            
+            // Blitz režīmam pievienojam taimeri
+            if (currentMode === 'blitz') {
+                startBlitzTimer();
+            }
             
             showQuestion();
         }
 
         function showQuestion() {
-            const question = questions[currentQuestionIndex];
-            document.getElementById('question-text').textContent = question.question;
+            const question = currentQuestions[currentQuestionIndex];
+            
+            // Hide question-text for flashcards mode
+            if (currentMode === 'flashcards') {
+                document.getElementById('question-text').style.display = 'none';
+            } else {
+                document.getElementById('question-text').style.display = 'block';
+                document.getElementById('question-text').textContent = question.question;
+            }
             
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
             
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.onclick = () => selectAnswer(index);
-                optionsContainer.appendChild(optionElement);
-            });
+            // Dažādi režīmi atšķirīgi rīkojas ar atbilžu variantiem
+            if (currentMode === 'group') {
+                // Sagrupē režīmam - vairāku izvēle
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option group-option';
+                    optionElement.textContent = option;
+                    optionElement.onclick = () => toggleGroupAnswer(index);
+                    optionsContainer.appendChild(optionElement);
+                });
+            } else if (currentMode === 'flashcards') {
+                // Flashcards režīmam - parādām tikai jautājumu
+                const flashcardElement = document.createElement('div');
+                flashcardElement.className = 'flashcard';
+                flashcardElement.innerHTML = `
+                    <div class="flashcard-question">${question.question}</div>
+                    <div class="flashcard-navigation">
+                        <button class="flashcard-nav-btn" onclick="previousFlashcard()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>‹</button>
+                        <div class="flashcard-counter">${currentQuestionIndex + 1} / ${currentQuestions.length}</div>
+                        <button class="flashcard-nav-btn" onclick="nextFlashcard()" ${currentQuestionIndex === currentQuestions.length - 1 ? 'disabled' : ''}>›</button>
+                    </div>
+                    <button class="btn" onclick="showFlashcardAnswer()">Rādīt atbildi</button>
+                `;
+                optionsContainer.appendChild(flashcardElement);
+                return;
+            } else {
+                // Parastais režīms
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = option;
+                    optionElement.onclick = () => selectAnswer(index);
+                    optionsContainer.appendChild(optionElement);
+                });
+            }
             
             document.getElementById('next-btn').disabled = true;
             document.getElementById('next-btn').textContent = 'Nākamais jautājums';
             document.getElementById('next-btn').onclick = nextQuestion;
             selectedAnswer = null;
             questionAnswered = false;
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
             updateProgress();
         }
 
@@ -347,69 +799,191 @@
         }
 
         function nextQuestion() {
-            if (selectedAnswer === null || questionAnswered) return;
+            if (questionAnswered) return;
             
-            questionAnswered = true;
-            const question = questions[currentQuestionIndex];
-            const options = document.querySelectorAll('.option');
-            
-            // Saglabājam rezultātu
-            const questionResult = {
-                question: question.question,
-                userAnswer: question.options[selectedAnswer],
-                correctAnswer: question.options[question.correct],
-                isCorrect: selectedAnswer === question.correct
-            };
-            
-            if (selectedAnswer === question.correct) {
-                correctAnswers.push(questionResult);
+            // Dažādi režīmi atšķirīgi apstrādā atbildes
+            if (currentMode === 'group') {
+                if (selectedGroupAnswers.length === 0) return;
+                questionAnswered = true;
+                
+                const question = currentQuestions[currentQuestionIndex];
+                // Fix: Compare with the correct array from the question
+                const isCorrect = JSON.stringify(selectedGroupAnswers.sort()) === JSON.stringify(question.correct.sort());
+                
+                const questionResult = {
+                    question: question.question,
+                    userAnswer: selectedGroupAnswers.map(i => question.options[i]).join(', '),
+                    correctAnswer: question.correct.map(i => question.options[i]).join(', '),
+                    isCorrect: isCorrect
+                };
+                
+                if (isCorrect) {
+                    correctAnswers.push(questionResult);
+                    score++;
+                } else {
+                    incorrectAnswers.push(questionResult);
+                }
+                
+                // Store the result for confetti check and visual feedback
+                window.groupModeResult = { 
+                    isCorrect, 
+                    question, 
+                    selectedAnswers: [...selectedGroupAnswers] 
+                };
+                
+                selectedGroupAnswers = [];
+            } else if (currentMode === 'blitz') {
+                // Blitz režīmam nav animāciju, tikai ātri pārejam uz nākamo
+                if (selectedAnswer === null) return;
+                questionAnswered = true;
+                
+                const question = currentQuestions[currentQuestionIndex];
+                const questionResult = {
+                    question: question.question,
+                    userAnswer: question.options[selectedAnswer],
+                    correctAnswer: question.options[question.correct],
+                    isCorrect: selectedAnswer === question.correct
+                };
+                
+                if (selectedAnswer === question.correct) {
+                    correctAnswers.push(questionResult);
+                    score++;
+                } else {
+                    incorrectAnswers.push(questionResult);
+                }
+                
+                // Blitz režīmam nekavējamies
+                if (currentQuestionIndex < currentQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+                return;
             } else {
-                incorrectAnswers.push(questionResult);
+                if (selectedAnswer === null || questionAnswered) return;
+                
+                questionAnswered = true;
+                const question = currentQuestions[currentQuestionIndex];
+                
+                // Saglabājam rezultātu
+                const questionResult = {
+                    question: question.question,
+                    userAnswer: question.options[selectedAnswer],
+                    correctAnswer: question.options[question.correct],
+                    isCorrect: selectedAnswer === question.correct
+                };
+                
+                if (selectedAnswer === question.correct) {
+                    correctAnswers.push(questionResult);
+                    score++;
+                } else {
+                    incorrectAnswers.push(questionResult);
+                }
             }
             
-            // Parādām pareizās atbildes ar pareizām krāsām
-            options.forEach((option, index) => {
-                option.onclick = null;
-                if (index === question.correct) {
-                    // Ja lietotājs izvēlējās pareizo atbildi, tā ir zaļa
-                    if (index === selectedAnswer) {
-                        option.classList.add('correct');
-                    } else {
-                        // Ja lietotājs neizvēlējās pareizo, tā ir dzeltena
-                        option.classList.add('correct-answer');
+            // Parādām rezultātus (tikai ne Blitz režīmam)
+            if (currentMode !== 'blitz') {
+                const options = document.querySelectorAll('.option');
+                const question = currentQuestions[currentQuestionIndex];
+                
+                if (currentMode === 'group') {
+                    // Group mode visual feedback
+                    const storedResult = window.groupModeResult;
+                    const storedAnswers = storedResult ? storedResult.question.correct : question.correct;
+                    const storedSelectedAnswers = storedResult ? storedResult.selectedAnswers : [];
+                    
+                    options.forEach((option, index) => {
+                        option.onclick = null;
+                        
+                        if (storedAnswers.includes(index)) {
+                            // Correct answers are green
+                            if (storedSelectedAnswers.includes(index)) {
+                                option.classList.add('correct');
+                            } else {
+                                option.classList.add('correct-answer');
+                            }
+                        } else if (storedSelectedAnswers.includes(index)) {
+                            // User selected wrong answer - red
+                            option.classList.add('incorrect');
+                        }
+                    });
+                    
+                    // Show confetti for correct group answers
+                    if (storedResult && storedResult.isCorrect) {
+                        // Special confetti for all 4 correct answers
+                        if (storedAnswers.length === 4) {
+                            confetti({
+                                particleCount: 200,
+                                spread: 100,
+                                origin: { y: 0.6 }
+                            });
+                        } else {
+                            confetti({
+                                particleCount: 100,
+                                spread: 70,
+                                origin: { y: 0.6 }
+                            });
+                        }
                     }
-                } else if (index === selectedAnswer && index !== question.correct) {
-                    // Lietotāja izvēlētā nepareizā atbilde ir sarkana
-                    option.classList.add('incorrect');
+                    
+                    // Clear the stored result
+                    window.groupModeResult = null;
+                } else {
+                    // Regular mode visual feedback
+                    options.forEach((option, index) => {
+                        option.onclick = null;
+                        if (index === question.correct) {
+                            // Ja lietotājs izvēlējās pareizo atbildi, tā ir zaļa
+                            if (index === selectedAnswer) {
+                                option.classList.add('correct');
+                            } else {
+                                // Ja lietotājs neizvēlējās pareizo, tā ir dzeltena
+                                option.classList.add('correct-answer');
+                            }
+                        } else if (index === selectedAnswer && index !== question.correct) {
+                            // Lietotāja izvēlētā nepareizā atbilde ir sarkana
+                            option.classList.add('incorrect');
+                        }
+                    });
+                    
+                    // Palielinām punktu skaitu un parādām confetti
+                    if (selectedAnswer === question.correct) {
+                        // Confetti efekts pareizajai atbildei
+                        confetti({
+                            particleCount: 100,
+                            spread: 70,
+                            origin: { y: 0.6 }
+                        });
+                    }
                 }
-            });
-            
-            // Palielinām punktu skaitu un parādām confetti
-            if (selectedAnswer === question.correct) {
-                score++;
-                // Confetti efekts pareizajai atbildei
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
             }
             
             document.getElementById('score').textContent = score;
             
-            if (currentQuestionIndex < questions.length - 1) {
-                setTimeout(() => {
-                    document.getElementById('next-btn').textContent = 'Nākamais jautājums';
-                    document.getElementById('next-btn').onclick = () => {
-                        currentQuestionIndex++;
-                        showQuestion();
-                    };
-                }, 2000); // Īsa pauze, lai lietotājs redz rezultātu
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                if (currentMode === 'blitz') {
+                    // Blitz režīmam nekavējamies
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('next-btn').textContent = 'Nākamais jautājums';
+                        document.getElementById('next-btn').onclick = () => {
+                            currentQuestionIndex++;
+                            showQuestion();
+                        };
+                    }, 2000); // Īsa pauze, lai lietotājs redz rezultātu
+                }
             } else {
-                setTimeout(() => {
-                    document.getElementById('next-btn').textContent = 'Skatīt rezultātu';
-                    document.getElementById('next-btn').onclick = showResult;
-                }, 2000);
+                if (currentMode === 'blitz') {
+                    showResult();
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('next-btn').textContent = 'Skatīt rezultātu';
+                        document.getElementById('next-btn').onclick = showResult;
+                    }, 2000);
+                }
             }
         }
 
@@ -417,7 +991,7 @@
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('result-screen').style.display = 'block';
             
-            const percentage = (score / questions.length) * 100;
+            const percentage = (score / currentQuestions.length) * 100;
             document.getElementById('final-score').textContent = score;
             
             const resultText = document.getElementById('result-text');
@@ -473,12 +1047,127 @@
         }
 
         function restartGame() {
-            startGame();
+            showCollections();
         }
 
         function updateProgress() {
-            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
             document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        // Blitz taimeri
+        function startBlitzTimer() {
+            blitzTimer = setInterval(() => {
+                blitzTimeLeft--;
+                updateBlitzTimer();
+                
+                if (blitzTimeLeft <= 0) {
+                    clearInterval(blitzTimer);
+                    endBlitzGame();
+                }
+            }, 1000);
+        }
+
+        function updateBlitzTimer() {
+            const minutes = Math.floor(blitzTimeLeft / 60);
+            const seconds = blitzTimeLeft % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Pievienojam taimeri ekrānam
+            let timerElement = document.getElementById('blitz-timer');
+            if (!timerElement) {
+                timerElement = document.createElement('div');
+                timerElement.id = 'blitz-timer';
+                timerElement.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 0, 0, 0.8);
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    z-index: 1000;
+                `;
+                document.body.appendChild(timerElement);
+            }
+            timerElement.textContent = timeString;
+        }
+
+        function endBlitzGame() {
+            clearInterval(blitzTimer);
+            showResult();
+        }
+
+        // Sagrupē režīma funkcijas
+        let selectedGroupAnswers = [];
+        
+        function toggleGroupAnswer(index) {
+            const option = document.querySelectorAll('.group-option')[index];
+            if (selectedGroupAnswers.includes(index)) {
+                selectedGroupAnswers = selectedGroupAnswers.filter(i => i !== index);
+                option.classList.remove('selected');
+            } else {
+                selectedGroupAnswers.push(index);
+                option.classList.add('selected');
+            }
+            
+            // Aktivizējam pogu, ja ir izvēlēta vismaz viena atbilde
+            document.getElementById('next-btn').disabled = selectedGroupAnswers.length === 0;
+        }
+
+        // Flashcards režīma funkcijas
+        function showFlashcardAnswer() {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionsContainer = document.getElementById('options-container');
+            
+            optionsContainer.innerHTML = `
+                <div class="flashcard-answer">
+                    <div class="flashcard-answer-text">
+                        <strong>Pareizā atbilde:</strong><br>
+                        ${question.options[question.correct]}
+                    </div>
+                    <div class="flashcard-navigation">
+                        <button class="flashcard-nav-btn" onclick="previousFlashcard()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>‹</button>
+                        <div class="flashcard-counter">${currentQuestionIndex + 1} / ${currentQuestions.length}</div>
+                        <button class="flashcard-nav-btn" onclick="nextFlashcard()" ${currentQuestionIndex === currentQuestions.length - 1 ? 'disabled' : ''}>›</button>
+                    </div>
+                    <button class="btn" onclick="nextFlashcard()">Nākamā kārtiņa</button>
+                </div>
+            `;
+        }
+
+        function nextFlashcard() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function previousFlashcard() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function exitToCollections() {
+            // Stop blitz timer if running
+            if (blitzTimer) {
+                clearInterval(blitzTimer);
+                blitzTimer = null;
+            }
+            
+            // Remove blitz timer element if it exists
+            const timerElement = document.getElementById('blitz-timer');
+            if (timerElement) {
+                timerElement.remove();
+            }
+            
+            showCollections();
         }
     </script>
 </body>
