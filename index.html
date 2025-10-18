@@ -545,7 +545,9 @@
                 <div class="question" id="question-text"></div>
                 <div class="options" id="options-container"></div>
             </div>
-            <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Nākamais jautājums</button>
+            <div style="text-align: center;">
+                <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Nākamais jautājums</button>
+            </div>
         </div>
         
         <div id="result-screen" class="game-container">
@@ -711,10 +713,12 @@
                 document.getElementById('score-container').style.display = 'none';
                 document.getElementById('progress-container').style.display = 'none';
                 document.getElementById('question-counter').style.display = 'none';
+                document.getElementById('next-btn').parentElement.style.display = 'none';
             } else {
                 document.getElementById('score-container').style.display = 'block';
                 document.getElementById('progress-container').style.display = 'block';
                 document.getElementById('question-counter').style.display = 'block';
+                document.getElementById('next-btn').parentElement.style.display = 'block';
             }
             
             // Blitz režīmam pievienojam taimeri
@@ -739,10 +743,33 @@
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
             
+            // Shuffle options for all modes except flashcards
+            let shuffledOptions = question.options;
+            let correctIndex = question.correct;
+            
+            if (currentMode !== 'flashcards') {
+                // Create array of indices and shuffle them
+                const indices = question.options.map((_, index) => index);
+                const shuffledIndices = indices.sort(() => Math.random() - 0.5);
+                
+                // Create shuffled options array
+                shuffledOptions = shuffledIndices.map(index => question.options[index]);
+                
+                // Find new correct index
+                correctIndex = shuffledIndices.indexOf(question.correct);
+                
+                // Store shuffled data for later use
+                window.currentShuffledData = {
+                    shuffledIndices,
+                    correctIndex,
+                    originalCorrect: question.correct
+                };
+            }
+            
             // Dažādi režīmi atšķirīgi rīkojas ar atbilžu variantiem
             if (currentMode === 'group') {
-                // Sagrupē režīmam - vairāku izvēle
-                question.options.forEach((option, index) => {
+                // Sagrupē režīmam - vairāku izvēle (with shuffling)
+                shuffledOptions.forEach((option, index) => {
                     const optionElement = document.createElement('div');
                     optionElement.className = 'option group-option';
                     optionElement.textContent = option;
@@ -765,8 +792,8 @@
                 optionsContainer.appendChild(flashcardElement);
                 return;
             } else {
-                // Parastais režīms
-                question.options.forEach((option, index) => {
+                // Parastais režīms (ar shuffled options)
+                shuffledOptions.forEach((option, index) => {
                     const optionElement = document.createElement('div');
                     optionElement.className = 'option';
                     optionElement.textContent = option;
@@ -775,13 +802,23 @@
                 });
             }
             
-            document.getElementById('next-btn').disabled = true;
-            document.getElementById('next-btn').textContent = 'Nākamais jautājums';
-            document.getElementById('next-btn').onclick = nextQuestion;
+            // Hide next button for flashcards mode
+            if (currentMode === 'flashcards') {
+                document.getElementById('next-btn').parentElement.style.display = 'none';
+            } else {
+                document.getElementById('next-btn').parentElement.style.display = 'block';
+                document.getElementById('next-btn').disabled = true;
+                document.getElementById('next-btn').textContent = 'Nākamais jautājums';
+                document.getElementById('next-btn').onclick = nextQuestion;
+            }
+            
             selectedAnswer = null;
             questionAnswered = false;
             document.getElementById('current-question').textContent = currentQuestionIndex + 1;
             updateProgress();
+            
+            // Don't clear shuffled data here - it's needed for visual feedback
+            // window.currentShuffledData = null;
         }
 
         function selectAnswer(answerIndex) {
@@ -807,13 +844,23 @@
                 questionAnswered = true;
                 
                 const question = currentQuestions[currentQuestionIndex];
-                // Fix: Compare with the correct array from the question
-                const isCorrect = JSON.stringify(selectedGroupAnswers.sort()) === JSON.stringify(question.correct.sort());
+                
+                // Use shuffled data if available
+                const shuffledData = window.currentShuffledData;
+                const actualCorrectIndices = shuffledData ? 
+                    question.correct.map(originalIndex => shuffledData.shuffledIndices.indexOf(originalIndex)) :
+                    question.correct;
+                
+                const isCorrect = JSON.stringify(selectedGroupAnswers.sort()) === JSON.stringify(actualCorrectIndices.sort());
+                
+                const actualOptions = shuffledData ? 
+                    shuffledData.shuffledIndices.map(i => question.options[i]) : 
+                    question.options;
                 
                 const questionResult = {
                     question: question.question,
-                    userAnswer: selectedGroupAnswers.map(i => question.options[i]).join(', '),
-                    correctAnswer: question.correct.map(i => question.options[i]).join(', '),
+                    userAnswer: selectedGroupAnswers.map(i => actualOptions[i]).join(', '),
+                    correctAnswer: actualCorrectIndices.map(i => actualOptions[i]).join(', '),
                     isCorrect: isCorrect
                 };
                 
@@ -827,7 +874,7 @@
                 // Store the result for confetti check and visual feedback
                 window.groupModeResult = { 
                     isCorrect, 
-                    question, 
+                    question: { ...question, correct: actualCorrectIndices }, 
                     selectedAnswers: [...selectedGroupAnswers] 
                 };
                 
@@ -838,19 +885,28 @@
                 questionAnswered = true;
                 
                 const question = currentQuestions[currentQuestionIndex];
+                
+                // Use shuffled data if available
+                const shuffledData = window.currentShuffledData;
+                const actualCorrectIndex = shuffledData ? shuffledData.correctIndex : question.correct;
+                const actualOptions = shuffledData ? shuffledData.shuffledIndices.map(i => question.options[i]) : question.options;
+                
                 const questionResult = {
                     question: question.question,
-                    userAnswer: question.options[selectedAnswer],
-                    correctAnswer: question.options[question.correct],
-                    isCorrect: selectedAnswer === question.correct
+                    userAnswer: actualOptions[selectedAnswer],
+                    correctAnswer: actualOptions[actualCorrectIndex],
+                    isCorrect: selectedAnswer === actualCorrectIndex
                 };
                 
-                if (selectedAnswer === question.correct) {
+                if (selectedAnswer === actualCorrectIndex) {
                     correctAnswers.push(questionResult);
                     score++;
                 } else {
                     incorrectAnswers.push(questionResult);
                 }
+                
+                // Update score display for blitz mode
+                document.getElementById('score').textContent = score;
                 
                 // Blitz režīmam nekavējamies
                 if (currentQuestionIndex < currentQuestions.length - 1) {
@@ -866,15 +922,20 @@
                 questionAnswered = true;
                 const question = currentQuestions[currentQuestionIndex];
                 
+                // Use shuffled data if available
+                const shuffledData = window.currentShuffledData;
+                const actualCorrectIndex = shuffledData ? shuffledData.correctIndex : question.correct;
+                const actualOptions = shuffledData ? shuffledData.shuffledIndices.map(i => question.options[i]) : question.options;
+                
                 // Saglabājam rezultātu
                 const questionResult = {
                     question: question.question,
-                    userAnswer: question.options[selectedAnswer],
-                    correctAnswer: question.options[question.correct],
-                    isCorrect: selectedAnswer === question.correct
+                    userAnswer: actualOptions[selectedAnswer],
+                    correctAnswer: actualOptions[actualCorrectIndex],
+                    isCorrect: selectedAnswer === actualCorrectIndex
                 };
                 
-                if (selectedAnswer === question.correct) {
+                if (selectedAnswer === actualCorrectIndex) {
                     correctAnswers.push(questionResult);
                     score++;
                 } else {
@@ -930,10 +991,14 @@
                     // Clear the stored result
                     window.groupModeResult = null;
                 } else {
-                    // Regular mode visual feedback
+                    // Regular mode visual feedback (with shuffled data)
+                    const shuffledData = window.currentShuffledData;
+                    const actualCorrectIndex = shuffledData ? shuffledData.correctIndex : question.correct;
+                    
                     options.forEach((option, index) => {
                         option.onclick = null;
-                        if (index === question.correct) {
+                        
+                        if (index === actualCorrectIndex) {
                             // Ja lietotājs izvēlējās pareizo atbildi, tā ir zaļa
                             if (index === selectedAnswer) {
                                 option.classList.add('correct');
@@ -941,14 +1006,14 @@
                                 // Ja lietotājs neizvēlējās pareizo, tā ir dzeltena
                                 option.classList.add('correct-answer');
                             }
-                        } else if (index === selectedAnswer && index !== question.correct) {
+                        } else if (index === selectedAnswer && index !== actualCorrectIndex) {
                             // Lietotāja izvēlētā nepareizā atbilde ir sarkana
                             option.classList.add('incorrect');
                         }
                     });
                     
                     // Palielinām punktu skaitu un parādām confetti
-                    if (selectedAnswer === question.correct) {
+                    if (selectedAnswer === actualCorrectIndex) {
                         // Confetti efekts pareizajai atbildei
                         confetti({
                             particleCount: 100,
@@ -964,15 +1029,22 @@
             if (currentQuestionIndex < currentQuestions.length - 1) {
                 if (currentMode === 'blitz') {
                     // Blitz režīmam nekavējamies
+                    // Clear shuffled data before next question
+                    window.currentShuffledData = null;
                     currentQuestionIndex++;
                     showQuestion();
                 } else {
                     setTimeout(() => {
-                        document.getElementById('next-btn').textContent = 'Nākamais jautājums';
-                        document.getElementById('next-btn').onclick = () => {
-                            currentQuestionIndex++;
-                            showQuestion();
-                        };
+                        // Only show next button if not in flashcards mode
+                        if (currentMode !== 'flashcards') {
+                            document.getElementById('next-btn').textContent = 'Nākamais jautājums';
+                            document.getElementById('next-btn').onclick = () => {
+                                // Clear shuffled data before next question
+                                window.currentShuffledData = null;
+                                currentQuestionIndex++;
+                                showQuestion();
+                            };
+                        }
                     }, 2000); // Īsa pauze, lai lietotājs redz rezultātu
                 }
             } else {
@@ -980,8 +1052,11 @@
                     showResult();
                 } else {
                     setTimeout(() => {
-                        document.getElementById('next-btn').textContent = 'Skatīt rezultātu';
-                        document.getElementById('next-btn').onclick = showResult;
+                        // Only show next button if not in flashcards mode
+                        if (currentMode !== 'flashcards') {
+                            document.getElementById('next-btn').textContent = 'Skatīt rezultātu';
+                            document.getElementById('next-btn').onclick = showResult;
+                        }
                     }, 2000);
                 }
             }
